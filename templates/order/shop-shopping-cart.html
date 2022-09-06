@@ -1,0 +1,160 @@
+{% extends "base-site.html" %}
+{% load static %}
+    <!-- Header END -->
+{% block contant %}
+    <div class="main">
+      <div class="container">
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        {% if items %}
+        <div class="row margin-bottom-40">
+          <!-- BEGIN CONTENT -->
+          <div class="col-md-12 col-sm-12">
+            <h1>Shopping cart</h1>
+            <div class="goods-page">
+              <div class="goods-data clearfix">
+                <div class="table-wrapper-responsive">
+                <table summary="Shopping cart">
+                  <tr>
+                    <th class="goods-page-image">Image</th>
+                    <th class="goods-page-description">Name</th>
+                    <th class="goods-page-ref-no">Size</th>
+                    <th class="goods-page-quantity">Quantity</th>
+                    <th class="goods-page-price">price</th>
+                    <th class="goods-page-total" colspan="2">Total</th>
+                  </tr>
+                  {% for pro in items %}
+                  <tr>
+                    <td class="goods-page-image">
+                      <a href="javascript:;"><img src="{{pro.product.pro_image}}" alt="Berry Lace Dress"></a>
+                    </td>
+                    <td class="goods-page-description">
+                      <h3><a href="javascript:;">{{pro.product.pro_name}}</a></h3>
+                      <p><strong>Item {{forloop.counter}}</strong> </p>
+                      <a href="{% url 'product:productdetails'  pro.product.pro_slug %}"><em>More info is here</em></a>
+                    </td>
+                    
+                    <td class="goods-page-ref-no">
+                      {% if pro.size %}
+                      <h3><a href="javascript:;">{{pro.size}}</a></h3>
+                      {% else%}
+                      <h3><a href="javascript:;">---</a></h3>
+                      {% endif %}
+                      <a href="javascript:;" style="color: black;"><p id="addcat"><strong>Sizes</strong></p></a>
+                      <div class="pull-left" id="catinput">
+                        <form action="{% url 'order:update' %}" method="post">
+                          {% csrf_token %}
+                          <select class="form-control input-sm" name="size">
+                            {% for product in pro.product.productsize_set.all %}
+                                {% if product.cl_size %} 
+                                <option value="{{product.cl_size }}">{{product.cl_size }}</option>
+                                {% elif product.sh_size %}
+                                <option value="{{product.sh_size }}">{{product.sh_size }}</option>
+                                {% else %}
+                                <option>Unavailable</option>
+                                {% endif %}
+                            {% endfor %}
+                          </select>
+                          <input name="cart_id" type="hidden" value="{{pro.id}}" >
+                          <button type="submit" style="background-color: red; color:aliceblue; width:65px; height:30px ;border:none;"> Upate</button>
+                      </form>
+                        
+                      </div>
+                    </td>
+                    <td class="goods-page-description">
+                      <form action="{% url 'order:update' %}" method="post">
+                        {% csrf_token %}
+                          <button class="btn btn-primary px-3 me-2"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</i>
+                          </button> 
+                            <input name="cart_id" type="hidden" value="{{pro.id}}" >
+                            <input  name="quantity" min="1" value="{{pro.quantity}}" readonly="" type="number"style="text-align:right ;width: 30px; height:25px ; font-weight:bold; border:none"/>
+                          <button class="btn btn-primary px-3 ms-2"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</i>
+                          </button> 
+                        </form>
+                    </td>
+                  </form>
+                    <td class="goods-page-price">
+                      <strong>{{pro.product.pro_total_price}}<span> LE</span></strong>
+                    </td>
+                    <td class="goods-page-total">
+                      <strong> {% widthratio pro.product.pro_total_price 1 pro.quantity  %}<span> LE</span></strong>
+                    </td>
+                    <td class="del-goods-col">
+                      <a class="del-goods" href="{% url 'order:delete' pro.slug %}">&nbsp;</a>
+                    </td>
+                  </tr>
+                    {% endfor %}
+                  </tr>
+                </table>
+                </div>
+
+                <div class="shopping-total">
+                  <ul>
+                    <li>
+                      <em>Sub total</em>
+                      <strong class="price">{{total_price}}<span> LE</span></strong>
+                    </li>
+                    <li>
+                      <em>Shipping cost</em>
+                      <strong class="price"><span>$</span>3.00</strong>
+                    </li>
+                    <li class="shopping-total-price">
+                      <em>Total</em>
+                      <strong class="price"><span>$</span>50.00</strong>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <button class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></button>
+              <button class="btn btn-primary" type="submit">Checkout <i class="fa fa-check"></i></button>
+            </div>
+          </div>
+          <!-- END CONTENT -->
+        </div>
+        {% else %}
+        <div class="row margin-bottom-40">
+          <!-- BEGIN CONTENT -->
+          <div class="col-md-12 col-sm-12">
+            <h1>Shopping cart</h1>
+            <div class="shopping-cart-page">
+              <div class="shopping-cart-data clearfix">
+                <p>Your shopping cart is empty!</p>
+              </div>
+            </div>
+          </div>
+          <!-- END CONTENT -->
+        </div>
+        {% endif %}
+        <!-- END SIDEBAR & CONTENT -->
+
+        <!-- BEGIN SIMILAR PRODUCTS -->
+        <div class="row margin-bottom-40">
+          <div class="col-md-12 col-sm-12">
+            <h2>Most popular products</h2>
+            <div class="owl-carousel owl-carousel4">
+              {% for product in products %}
+              <div>
+                <div class="product-item">
+                  <div class="pi-img-wrapper">
+                    <img src="{{product.pro_image}}" class="img-responsive" style="height:250px;" alt="Berry Lace Dress">
+                    <div>
+                      <a href="{{product.pro_image}}" class="btn btn-default fancybox-button">Zoom</a>
+                      <a href="#product-pop-up-{{forloop.counter}}" class="btn btn-default fancybox-fast-view">View</a>
+                    </div>
+                  </div>
+                  <h3><a href="shop-item.html">{{product.pro_name}}</a></h3>
+                  <div class="pi-price">{{product.pro_total_price}} LE</div>
+                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <!-- END SIMILAR PRODUCTS -->
+      </div>
+    </div>
+    {% endblock contant %}
+
+   

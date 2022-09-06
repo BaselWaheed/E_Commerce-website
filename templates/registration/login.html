@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mptt_tags %}
+    <!-- Header END -->
+    
+{% block contant %}
+  
+
+    <div class="main">
+      <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="">Store</a></li>
+            <li class="active">Login</li>
+        </ul>
+        {% endblock contant %}
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        {% block category %}
+          
+        
+        <div class="row margin-bottom-40">
+          <!-- BEGIN SIDEBAR -->
+          <div class="sidebar col-md-3 col-sm-5">
+ 
+          </div>
+          <!-- END SIDEBAR -->
+        </div>
+      </div>
+          <!-- BEGIN CONTENT -->
+          <div class="col-md-9 col-sm-7">
+            <h1>Login Page</h1>
+  
+            {% if form.errors %}
+
+              <div >
+                Email or Password incorrect
+              </div>
+   
+
+            {% endif %}
+            <div class="content-form-page">
+              <form role="form" class="form-horizontal form-without-legend"  method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                  <label class="{{field.label_classes}}  col-lg-2 control-label" for="{{ field.auto_id }}">{{ field.label }}<span class="require">*</span></label>
+                  <div class="col-lg-8">
+                    {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+        
+                <div class="row">
+                  <div class="col-lg-8 col-md-offset-2 padding-left-0 padding-top-20">
+                    <button class="btn btn-primary" type="submit">login</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- END CONTENT -->
+        </div>
+        <!-- END SIDEBAR & CONTENT -->
+      </div>
+    </div>
+    {% endblock category %}
+    <!-- BEGIN BRANDS -->
+  

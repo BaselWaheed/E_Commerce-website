@@ -1,0 +1,205 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-06 22:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: .\accounts\models.py:11
+msgid "The Email must be set"
+msgstr " الايميل غير موجود"
+
+#: .\accounts\models.py:24
+msgid "Superuser must have is_staff=True."
+msgstr ""
+
+#: .\accounts\models.py:26
+msgid "Superuser must have is_superuser=True."
+msgstr ""
+
+#: .\accounts\models.py:32
+msgid "firstname"
+msgstr " الاسم الاول"
+
+#: .\accounts\models.py:33
+msgid "lastname"
+msgstr "الاسم الثاني "
+
+#: .\accounts\models.py:34
+msgid "email address"
+msgstr "البريد الالكتروني"
+
+#: .\accounts\models.py:35
+msgid "phone number"
+msgstr "رقم التليفون"
+
+#: .\order\models.py:9
+msgid "customer"
+msgstr ""
+
+#: .\order\models.py:10
+msgid "Time"
+msgstr ""
+
+#: .\order\models.py:34 .\product\models.py:20 .\product\models.py:25
+#: .\product\models.py:40 .\product\models.py:78
+msgid "size"
+msgstr ""
+
+#: .\product\models.py:9
+msgid "category name "
+msgstr ""
+
+#: .\product\models.py:38
+msgid "name"
+msgstr ""
+
+#: .\product\models.py:39
+msgid "category name"
+msgstr ""
+
+#: .\product\models.py:41
+msgid "price"
+msgstr ""
+
+#: .\product\models.py:42
+msgid "status"
+msgstr ""
+
+#: .\product\models.py:43
+msgid "discount"
+msgstr ""
+
+#: .\product\models.py:44
+msgid "total price"
+msgstr ""
+
+#: .\product\models.py:45
+msgid "description"
+msgstr ""
+
+#: .\product\models.py:46
+msgid "favourite"
+msgstr ""
+
+#: .\product\models.py:47
+msgid "added time"
+msgstr ""
+
+#: .\product\models.py:48
+msgid "is active"
+msgstr ""
+
+#: .\product\models.py:49 .\product\models.py:70
+msgid "image"
+msgstr ""
+
+#: .\product\models.py:69
+msgid "product"
+msgstr ""
+
+#: .\product\models.py:71
+msgid "url"
+msgstr ""
+
+#: .\product\models.py:77
+msgid "title"
+msgstr ""
+
+#: .\product\models.py:80
+msgid "color"
+msgstr ""
+
+#: .\product\models.py:81
+msgid "quantity"
+msgstr ""
+
+#: .\project\settings.py:137
+msgid "German"
+msgstr " الالماني"
+
+#: .\project\settings.py:138
+msgid "English"
+msgstr "الانجليزي"
+
+#: .\project\settings.py:139
+msgid "Arabic"
+msgstr "العربيه"
+
+#: .\templates\part\navbar.html:11
+msgid "Metronic Shop UI"
+msgstr "متجر الكتروني"
+
+#: .\templates\part\navbar.html:70
+msgid "THEME COLOR"
+msgstr "الوان الخلفيه"
+
+#: .\templates\part\navbar.html:100
+msgid "languages"
+msgstr " اللغات"
+
+#: .\templates\part\navbar.html:119
+msgid "My Account"
+msgstr "بيانات المستخدم"
+
+#: .\templates\part\navbar.html:120
+msgid "My Wishlist"
+msgstr "المفضله"
+
+#: .\templates\part\navbar.html:121 .\templates\part\navbar.html:168
+msgid "Checkout"
+msgstr "الدفع"
+
+#: .\templates\part\navbar.html:123
+msgid " Log Out"
+msgstr "تسجيل الخروج"
+
+#: .\templates\part\navbar.html:125
+msgid "Log in"
+msgstr "تسجيل الدخول"
+
+#: .\templates\part\navbar.html:126
+msgid "Sign up"
+msgstr "اشتراك"
+
+#: .\templates\part\navbar.html:147
+msgid "items"
+msgstr "العناصر"
+
+#: .\templates\part\navbar.html:167
+msgid "View Cart"
+msgstr "عرض عربة التسوق"
+
+#: .\templates\part\navbar.html:181
+msgid "Offers"
+msgstr "العروض"
+
+#: .\templates\part\navbar.html:188
+msgid "About Us"
+msgstr "عنا"
+
+#: .\templates\part\navbar.html:194
+msgid "New"
+msgstr "جديد"
+
+#: .\templates\part\navbar.html:220
+msgid "Category"
+msgstr "التصنيف"
+
+#: .\templates\part\navbar.html:241 .\templates\part\navbar.html:243
+msgid "Search"
+msgstr "ابحث"

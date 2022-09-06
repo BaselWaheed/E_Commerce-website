@@ -1,0 +1,137 @@
+{% load static %}
+
+{% for product in products %}
+    
+  
+<div id="product-pop-up-{{ forloop.counter }}" style="display: none; width: 700px;">
+  <div class="product-page product-pop-up">
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-3">
+        <div class="product-main-image">
+          <img src="{{product.pro_image}}">
+        </div>
+        <div class="product-other-images">
+          {% for img in product.image_set.all  %}
+          <a class="fancybox-button" rel="photos-lib" href="{{img.im_url}}"><img  src="{{img.im_url}}" ></a>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-9">
+        <!-- name -->
+        <h2 id="building-name">{{product.pro_name}}</h2>
+        <div class="price-availability-block clearfix">
+          <div class="price">
+            <!-- price -->
+            <strong>LE <span >{{product.pro_total_price}}</span></strong>
+            <em>LE <span >{{product.pro_price}}</span></em>
+          </div>
+          <div class="availability">
+            <strong>{{product.pro_status}}</strong>
+          </div>
+        </div>
+        <div class="description">
+
+          <p >{{product.pro_description}}</p>
+        </div>
+        <form  method="get" action="{% url 'order:add_to_cart'  product.pro_slug %}">
+          <div class="product-page-options">
+            <div class="pull-left">
+              <label class="control-label">Size:</label>
+              <select class="form-control input-sm" name="size">
+                <option >Select</option>
+                {% for produt in product.productsize_set.all %}
+                {% if produt.cl_size %}
+                <option value="{{produt.cl_size }}">{{produt.cl_size }}</option>
+                {% elif produt.sh_size %}
+                <option value="{{produt.sh_size }}">{{produt.sh_size }}</option>
+                {% else %}
+                <option>Unavailable</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="product-page-cart">
+            <div class="product-quantity">
+                <input id="product-quantity" type="text" min="1" value="1" name="quantity" class="form-control input-sm">
+            </div>
+            <button class="btn btn-primary" type="submit">Add to cart</button>
+            <a href="{{product.get_absolute_url }}" class="btn btn-default">More details</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+
+
+
+{% for product in sale_products %}
+    
+  
+<div id="productpop-up-{{ forloop.counter }}" style="display: none; width: 700px;">
+  <div class="product-page product-pop-up">
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-3">
+        
+        <div class="product-main-image">
+          <img src="{{product.pro_image}}">
+        </div>
+        <div class="product-other-images">
+          
+          {% for img in product.image_set.all  %}
+          <a class="fancybox-button" rel="photos-lib" href="{{img.im_url}}"><img  src="{{img.im_url}}" ></a>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-9">
+        <!-- name -->
+        <h2 id="building-name">{{product.pro_name}}</h2>
+        <div class="price-availability-block clearfix">
+          <div class="price">
+            <!-- price -->
+            <strong>LE <span >{{product.pro_total_price}}</span></strong>
+            <em>LE <span >{{product.pro_price}}</span></em>
+          </div>
+          <div class="availability">
+            <strong>{{product.pro_status}}</strong>
+          </div>
+        </div>
+        <div class="description">
+
+          <p >{{product.pro_description}}</p>
+        </div>
+        <form  method="get" action="{% url 'order:add_to_cart'  product.pro_slug %}">
+          <div class="product-page-options">
+            <div class="pull-left">
+              <label class="control-label">Size:</label>
+              <select class="form-control input-sm" name="size">
+                <option >Select</option>
+                {% for produt in product.productsize_set.all %}
+                {% if produt.cl_size %}
+                <option value="{{produt.cl_size }}">{{produt.cl_size }}</option>
+                {% elif produt.sh_size %}
+                <option value="{{produt.sh_size }}">{{produt.sh_size }}</option>
+                {% else %}
+                <option>Unavailable</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="product-page-cart">
+            <div class="product-quantity">
+                <input id="product-quantity" type="text" min="1" value="1" name="quantity" class="form-control input-sm">
+            </div>
+            <button class="btn btn-primary" type="submit">Add to cart</button>
+            <a href="{{product.get_absolute_url }}" class="btn btn-default">More details</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}

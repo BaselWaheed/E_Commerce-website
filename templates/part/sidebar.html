@@ -1,0 +1,24 @@
+{% load static %}
+      {% load mptt_tags %}
+
+<div class="sidebar col-md-3 col-sm-4 ">
+    <ul class="list-group margin-bottom-25 sidebar-menu">
+
+      {% recursetree category %}
+      <li class="list-group-item clearfix dropdown cat{{node.id}}">
+        <a>
+          <i class="fa fa-angle-right"></i>
+          {{ node.cat_name }}
+        </a>
+        {% if not node.is_leaf_node %}
+        <ul class="dropdown-menu">
+          <li class="list-group-item clearfix dropdown cat{{children.id}}">
+            <a >
+              {{ children }}  
+            </a>
+          </li>
+        </ul>
+        {% endif %}
+      </li>
+      {% endrecursetree category %}
+    </ul>
