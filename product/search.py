@@ -17,10 +17,10 @@ def lookup(query, index='products', fields=['pro_name', 'pro_description']):
 
     for hit in results:
         data = {
-            "slug": hit.pro_slug,
-            "title": hit.pro_name,
-            "description": hit.pro_description,
-            "image" :hit.pro_image,
+            "pro_slug": hit.pro_slug,
+            "pro_name": hit.pro_name,
+            "pro_description": hit.pro_description,
+            "pro_image" :hit.pro_image,
             "pro_price" :hit.pro_price,
             "pro_total_price" :hit.pro_total_price,
             "pro_status":hit.pro_status,

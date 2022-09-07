@@ -25,10 +25,10 @@
                     <div class="container">
                         <div class="carousel-position-four text-center">
                             <h2 class="margin-bottom-20 animate-delay carousel-title-v3 border-bottom-title text-uppercase" data-animation="animated fadeInDown">
-                                Tones of <br/><span class="color-red-v2">Shop UI Features</span><br/> designed
+                                {% trans "Tones of " %}<br/><span class="color-red-v2">{% trans "E commerce" %}</span><br/> designed
                             </h2>
-                            <p class="carousel-subtitle-v2" data-animation="animated fadeInUp">Lorem ipsum dolor sit amet constectetuer diam <br/>
-                            adipiscing elit euismod ut laoreet dolore.</p>
+                            <p class="carousel-subtitle-v2" data-animation="animated fadeInUp">{% trans "Lorem ipsum dolor sit amet constectetuer diam" %} <br/>
+                            {% trans "adipiscing elit euismod ut laoreet dolore." %}</p>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
         <div class="row margin-bottom-40">
           <!-- BEGIN SALE PRODUCT -->
           <div class="col-md-12 sale-product">
-            <h2>New Arrivals</h2>
+            <h2>{% trans "New Arrivals" %}</h2>
             
             <div class="owl-carousel owl-carousel5">
               {% for product in products %}
@@ -117,7 +117,7 @@
                     </div>
                     <h3><a href="{{product.get_absolute_url}}">{{product.pro_name}}</a></h3>
                     <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="btn btn-default add2cart">Add to cart</button>
+                    <button type="submit" class="btn btn-default add2cart">{% trans "Add to cart" %}</button>
                     {% if product.pro_discount %}
                     <div class="pi-price">{{product.pro_total_price}}  LE</div>
                     <!-- <div class="sticker sticker-sale"></div> -->
@@ -169,7 +169,7 @@
     
 
           <div class="col-md-9 col-sm-8">
-            <h2>Three items </h2>
+            <h2>{% trans "Three items" %} </h2>
             <div class="owl-carousel owl-carousel3">
               {% for product in sale_products  %} 
                 {% if product.pro_discount %}
@@ -179,14 +179,14 @@
                     <div class="pi-img-wrapper">
                       <img src="{{product.pro_image}}" class="img-responsive" alt="Berry Lace Dress">
                       <div>
-                        <a href="{{product.pro_image}}" class="btn btn-default fancybox-button">Zoom</a>
-                        <a href="#productpop-up-{{forloop.counter}}" class="btn btn-default fancybox-fast-view">View</a>
+                        <a href="{{product.pro_image}}" class="btn btn-default fancybox-button">{% trans "Zoom" %}</a>
+                        <a href="#productpop-up-{{forloop.counter}}" class="btn btn-default fancybox-fast-view">{% trans "View" %}</a>
                       </div>
                     </div>
                     <h3><a href="{{product.get_absolute_url}}">{{product.pro_name}}</a></h3>
                     <div class="pi-price">{{product.pro_total_price}} LE</div>
                     <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="btn btn-default add2cart">Add to cart</button>
+                    <button type="submit" class="btn btn-default add2cart">{% trans "Add to cart" %}</button>
                     <div class="sticker sticker-sale"></div>
                   </div>
                 </form>
@@ -211,13 +211,13 @@
                   <div class="pi-img-wrapper">
                     <img src="{% static 'assets/pages/img/products/k4.jpg' %}" class="img-responsive" alt="Berry Lace Dress">
                     <div>
-                      <a href="{% static 'assets/pages/img/products/k4.jpg' %}" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                      <a href="{% static 'assets/pages/img/products/k4.jpg' %}" class="btn btn-default fancybox-button">{% trans "Zoom" %}</a>
+                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">{% trans "View" %}</a>
                     </div>
                   </div>
                   <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
                   <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="javascript:;" class="btn btn-default add2cart">{% trans "Add to cart" %}</a>
                 </div>
               </div>
               <div>

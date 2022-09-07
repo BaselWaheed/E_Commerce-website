@@ -3,6 +3,8 @@ from django.views import View
 from django.views.generic import ListView ,DetailView
 from .models import Product , Category, ProductSize
 from product.search import lookup
+from django.db.models import Q
+
 
 
 class IndexListView(View):
@@ -27,6 +29,7 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
         context['category'] = Category.objects.all()
+        context['BESTSELLERS'] = Product.objects.filter(pro_is_active=True)[:3]
         return context
         
     def get_context_object_name(self, object_list):
@@ -43,10 +46,13 @@ class ProductDetails(DetailView):
     def get_object(self, queryset=None):
         return self.model.objects.get(pro_slug=self.kwargs.get("slug"))
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(ProductDetails, self).get_context_data(**kwargs)
-    #     context['category'] = Category.objects.all()
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetails, self).get_context_data(**kwargs)
+        context['BESTSELLERS'] = Product.objects.filter(pro_is_active=True)[:3]
+        context['POPULAR'] = Product.objects.filter(pro_category=self.get_object().pro_category)[:4]
+        print(context['POPULAR'])
+
+        return context
         
     def get_context_object_name(self, object_list):
         return 'product'
@@ -56,18 +62,23 @@ class ProductDetails(DetailView):
 
 class SearchView(View):
       def get(self, request , *args , **kwargs):
-
         query = request.GET
         q = query.get('q')
-        
-
         context = {
-
+            'BESTSELLERS':Product.objects.filter(pro_is_active=True)[:3],
+            'query' : q,
         }
         if q is not None :
-            results = lookup(query=q )
+            # try :
+            #     results = lookup(query=q)
+            #     context['results'] = results
+            # except :
+            results = Product.objects.filter(
+                Q(pro_name__icontains= q) | Q(pro_description__icontains=q) | Q(pro_total_price__icontains=q)
+                )
             context['results'] = results
-            context['query'] = q
+
+
         return render(request, 'product/shop-search-result.html' , context)
 
 
@@ -75,3 +86,4 @@ class SearchView(View):
 username = 'elastic'
 
 password = 'XbpNdt0b4RpraQnIrV8nqngK'
+

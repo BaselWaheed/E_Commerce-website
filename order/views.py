@@ -42,6 +42,9 @@ class Add_To_Cart(View):
             else :
                 new_dish = Cart.objects.create(product=product , order=old_order , quantity= quantity ,size=size  ,in_cart=True)
 
+        else :
+            return redirect('accounts:login')
+
         return HttpResponseRedirect(redirect_to='/products/')
         
 
