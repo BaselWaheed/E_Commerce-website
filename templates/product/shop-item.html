@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load mptt_tags %}
     <!-- Header END -->
@@ -18,22 +19,14 @@
           {% block category %}
           
           <div class="sidebar-products clearfix">
-            <h2>Bestsellers</h2>
+            <h2>{% trans "Bestsellers" %}</h2>
+            {% for item in BESTSELLERS  %}
             <div class="item">
-              <a href="shop-item.html"><img src="assets/pages/img/products/k1.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-              <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-              <div class="price">$31.00</div>
+              <a href="{% url 'product:productdetails' item.pro_slug %}"><img src="{{item.pro_image}}" alt="Some Shoes in Animal with Cut Out"></a>
+              <h3><a href="{% url 'product:productdetails' item.pro_slug %}">{{item.pro_name}}</a></h3>
+              <div class="price">{{item.pro_total_price}}  LE</div>
             </div>
-            <div class="item">
-              <a href="shop-item.html"><img src="assets/pages/img/products/k4.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-              <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-              <div class="price">$23.00</div>
-            </div>
-            <div class="item">
-              <a href="shop-item.html"><img src="assets/pages/img/products/k3.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-              <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-              <div class="price">$86.00</div>
-            </div>
+            {% endfor %}
           </div>
         </div>
 
@@ -56,56 +49,58 @@
                   </div>
                 </div>
                 <form action="{% url 'order:add_to_cart'  product.pro_slug %}" method="get">
-                <div class="col-md-6 col-sm-6">
-                  <h1>{{product.pro_name}}</h1>
-                  <div class="price-availability-block clearfix">
-                    <div class="price">
-                      <strong><span>LE </span>{{product.pro_total_price}}</strong>
-                      <em>LE <span>{{product.pro_price}}</span></em>
+                  <div class="col-md-6 col-sm-6">
+                    <h1>{{product.pro_name}}</h1>
+                    <div class="price-availability-block clearfix">
+                      <div class="price">
+                        <strong><span>LE </span>{{product.pro_total_price}}</strong>
+                        <em>LE <span>{{product.pro_price}}</span></em>
+                      </div>
+                      <div class="availability">
+                        Availability: <strong>{{product.pro_status}}</strong>
+                      </div>
                     </div>
-                    <div class="availability">
-                      Availability: <strong>{{product.pro_status}}</strong>
+                    <div class="description">
+                      <p>{{product.pro_description}}</p>
                     </div>
-                  </div>
-                  <div class="description">
-                    <p>{{product.pro_description}}</p>
-                  </div>
-                  <div class="product-page-options">
-                    <div class="pull-left">
-                      <label class="control-label">Size:</label>
-                      <select class="form-control input-sm" name="size">
-                        {% for pro in  product.cart_set.all %}
-                          {% if pro.size %}
-                          <option value="{{pro.size}}">{{pro.size}}</option>
+                    <div class="product-page-options">
+                      <div class="pull-left">
+                        <label class="control-label">Size:</label>
+                        <select class="form-control input-sm" name="size">
+                          {% for pro in  product.cart_set.all %}
+                            {% if pro.size %}
+                            <option value="{{pro.size}}">{{pro.size}}</option>
+                            {% else %}
+                            <option>---</option>
+                            {% endif %}
+                          {% endfor %}
+                          {% for produt in product.productsize_set.all %}
+                          {% if produt.cl_size %}
+                          <option value="{{produt.cl_size }}">{{produt.cl_size }}</option>
+                          {% elif produt.sh_size %}
+                          <option value="{{produt.sh_size }}">{{produt.sh_size }}</option>
                           {% else %}
-                          <option>---</option>
+                          <option>Unavailable</option>
+                          {% endif %}
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="product-page-cart">
+                      <div class="product-quantity">
+                      {% if user.is_authenticated %}
+                        {% for produt in product.cart_set.all %}
+                          {% if produt.quantity %}
+                          <input id="product-quantity" type="text" min="1"  value="{{produt.quantity}}" readonly class="form-control input-sm" name="quantity">
                           {% endif %}
                         {% endfor %}
-                        {% for produt in product.productsize_set.all %}
-                        {% if produt.cl_size %}
-                        <option value="{{produt.cl_size }}">{{produt.cl_size }}</option>
-                        {% elif produt.sh_size %}
-                        <option value="{{produt.sh_size }}">{{produt.sh_size }}</option>
-                        {% else %}
-                        <option>Unavailable</option>
-                        {% endif %}
-                        {% endfor %}
-                      </select>
-                    </div>
-                  </div>
-                  <div class="product-page-cart">
-                    <div class="product-quantity">
-                      {% for produt in product.cart_set.all %}
-                      {% if produt.quantity %}
-                        <input id="product-quantity" type="text" min="1"  value="{{produt.quantity}}" readonly class="form-control input-sm" name="quantity">
                       {% else %}
                       <input id="product-quantity" type="text" min="1"  value="1" readonly class="form-control input-sm" name="quantity">
-                      {% endif %}
+                      {% endif  %}
                       </div>
-                      {% endfor %}
-                    <button class="btn btn-primary" type="submit">Add to cart</button>
-                  </div>
-                </form>
+                      <button class="btn btn-primary" type="submit">Add to cart</button>
+                    </div>
+                  </form>
                   <div class="review">
                     <input type="range" value="4" step="0.25" id="backing4">
                     <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false"  data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
@@ -120,7 +115,6 @@
                     <li><a class="tumblr" data-original-title="tumblr" href="javascript:;"></a></li>
                   </ul>
                 </div>
-
                 <div class="product-page-content">
                   <ul id="myTab" class="nav nav-tabs">
                     <li><a href="#Description" data-toggle="tab">Description</a></li>
@@ -224,103 +218,32 @@
         {% block added %}
         <div class="row margin-bottom-40">
           <div class="col-md-12 col-sm-12">
-            <h2>Most popular products</h2>
+            <h2>{% trans "Most popular products" %}</h2>
             <div class="owl-carousel owl-carousel4">
+              {% for item in POPULAR  %}
               <div>
                 <div class="product-item">
                   <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
+                    <img src="{{item.pro_image}}" class="img-responsive" alt="Berry Lace Dress">
                     <div>
-                      <a href="assets/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                      <a href="{{item.pro_image}}" class="btn btn-default fancybox-button">{% trans "Zoom" %}</a>
+                      <a href="#product-pop-up{{forloop.counter}}" class="btn btn-default fancybox-fast-view">{% trans "View" %}</a>
                     </div>
                   </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                  <div class="sticker sticker-new"></div>
+                  <h3><a href="{% url 'product:productdetails' item.pro_slug %}">{{item.pro_name}}</a></h3>
+                  <div class="pi-price">{{item.pro_total_price}}  LE</div>
+                  <a href="{% url 'order:add_to_cart' item.pro_slug %}" class="btn btn-default add2cart">{% trans "Add to cart" %}</a>
+                  <!-- <div class="sticker sticker-new"></div> -->
                 </div>
               </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress2</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k3.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress3</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k4.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress4</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                  <div class="sticker sticker-sale"></div>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress5</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
-              <div>
-                <div class="product-item">
-                  <div class="pi-img-wrapper">
-                    <img src="assets/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                    <div>
-                      <a href="assets/pages/img/products/k2.jpg" class="btn btn-default fancybox-button">Zoom</a>
-                      <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                    </div>
-                  </div>
-                  <h3><a href="shop-item.html">Berry Lace Dress6</a></h3>
-                  <div class="pi-price">$29.00</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                </div>
-              </div>
+              {% endfor %}
             </div>
+            
           </div>
         </div>
         <!-- END SIMILAR PRODUCTS -->
       </div>
     </div>
-
-    
-      
     {% endblock added %}
 
     <!-- BEGIN BRANDS -->

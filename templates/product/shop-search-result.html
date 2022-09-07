@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% load mptt_tags %}
     <!-- Header END -->
@@ -7,9 +8,9 @@
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="">Store</a></li>
-            <li class="active">Search result</li>
+            <li><a href="index.html">{% trans "Home" %}</a></li>
+            <li><a href="">{% trans "Store" %}</a></li>
+            <li class="active">{% trans "Search result" %}</li>
         </ul>
         {% endblock contant %}
         <!-- BEGIN SIDEBAR & CONTENT -->
@@ -21,8 +22,8 @@
             <!-- BEGIN SIDEBAR -->
         
                 <div class="sidebar-filter margin-bottom-25">
-                  <h2>Search categories</h2>
-                  <h3>Availability</h3>
+                  <h2>{% trans "Search categories" %}</h2>
+                  <h3>{% trans "Availability" %}</h3>
                   <div class="checkbox-list">
                     <label><input type="checkbox"> Not Available (3)</label>
                     <label><input type="checkbox"> In Stock (26)</label>
@@ -31,28 +32,21 @@
                   <h3>Price</h3>
                   <p>
                     <label for="amount">Range:</label>
-                    <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+                    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; ">
                   </p>
                   <div id="slider-range"></div>
                 </div>
 
                 <div class="sidebar-products clearfix">
-                  <h2>Bestsellers</h2>
+                  <h2>{% trans "Bestsellers" %}</h2>
+                  {% for pro in BESTSELLERS %}
+
                   <div class="item">
-                    <a href="shop-item.html"><img src="{% static 'assets/pages/img/products/k1.jpg' %} " alt="Some Shoes in Animal with Cut Out"></a>
-                    <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                    <div class="price">$31.00</div>
+                    <a href="shop-item.html"><img src="{{pro.pro_image}} " alt="Some Shoes in Animal with Cut Out"></a>
+                    <h3><a href="{{ pro.get_absolute_url }}">{{pro.pro_name}}</a></h3>
+                    <div class="price">{{pro.pro_total_price}} LE</div>
                   </div>
-                  <div class="item">
-                    <a href="shop-item.html"><img src="{% static 'assets/pages/img/products/k4.jpg' %} " alt="Some Shoes in Animal with Cut Out"></a>
-                    <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                    <div class="price">$23.00</div>
-                  </div>
-                  <div class="item">
-                    <a href="shop-item.html"><img src="{% static 'assets/pages/img/products/k3.jpg' %} " alt="Some Shoes in Animal with Cut Out"></a>
-                    <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                    <div class="price">$86.00</div>
-                  </div>
+                  {% endfor %}
                 </div>
               </div>
           </div>
@@ -63,14 +57,14 @@
             <div class="content-search margin-bottom-20">
               <div class="row">
                 <div class="col-md-6">
-                  <h1>Search result for <em>{{query}}</em></h1>
+                  <h1>{% trans "Search result for " %}<em>{{query}}</em></h1>
                 </div>
                 <div class="col-md-6">
                   <form method="get" >
                     <div class="input-group">
                       <input  name="q" type="text" placeholder="Search" class="form-control">
                       <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">Search</button>
+                        <button class="btn btn-primary" type="submit">{% trans "Search" %}</button>
                       </span>
                     </div>
                   </form>
@@ -119,22 +113,22 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
-                    <img src="{{product.image}}" class="img-responsive" alt="Berry Lace Dress">
+                    <img src="{{product.pro_image}}" class="img-responsive" alt="Berry Lace Dress">
                     <div>
-                      <a href="{{product.image}}" class="btn btn-default fancybox-button">Zoom</a>
+                      <a href="{{product.pro_image}}" class="btn btn-default fancybox-button">{% trans "Zoom" %}</a>
                       <!-- <a href="#product-pop-up-{{ forloop.counter }} " class="btn btn-default fancybox-fast-view">View</a> -->
                     </div>
                   </div>
-                  <h3><a href="{{ product.url}}">{{product.title}}</a></h3>
+                  <h3><a href="{{ product.url}}">{{product.pro_name}}</a></h3>
                   <div class="pi-price">{{product.pro_price}}  LE</div>
-                  <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
+                  <a href="{% url 'order:add_to_cart' product.pro_slug %}" class="btn btn-default add2cart">{% trans "Add to cart" %}</a>
                 </div>
               </div>
               {% endfor %}
             </div>
 
             {% else %}
-              <h5 style="font-size:20px; text-align:center; padding-top:80px;" > This {{query}} is could not be found  </h1>
+              <h5 style="font-size:20px; text-align:center; padding-top:80px;" > {% trans "This" %} {{query}} {% trans "is could not be found " %} </h1>
             {% endif %}
 
             <!-- END PRODUCT LIST -->

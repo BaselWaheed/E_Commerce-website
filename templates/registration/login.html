@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 {% load mptt_tags %}
     <!-- Header END -->
@@ -9,9 +10,9 @@
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="">Store</a></li>
-            <li class="active">Login</li>
+            <li><a href="index.html">{% trans "Home" %}</a></li>
+            <li><a href="">{% trans "Store" %}</a></li>
+            <li class="active">{% trans "Login" %}</li>
         </ul>
         {% endblock contant %}
         <!-- BEGIN SIDEBAR & CONTENT -->
@@ -28,12 +29,12 @@
       </div>
           <!-- BEGIN CONTENT -->
           <div class="col-md-9 col-sm-7">
-            <h1>Login Page</h1>
+            <h1>{% trans "Login Page" %}</h1>
   
             {% if form.errors %}
 
               <div >
-                Email or Password incorrect
+                {% trans "Email or Password incorrect" %}
               </div>
    
 
@@ -52,7 +53,7 @@
         
                 <div class="row">
                   <div class="col-lg-8 col-md-offset-2 padding-left-0 padding-top-20">
-                    <button class="btn btn-primary" type="submit">login</button>
+                    <button class="btn btn-primary" type="submit">{% trans "login" %}</button>
                   </div>
                 </div>
               </form>

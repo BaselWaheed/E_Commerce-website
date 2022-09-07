@@ -2,39 +2,41 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from .models import CustomUser
+from django.utils.translation import ugettext_lazy as _
+
 
 
 class CustomUserCreationForm(UserCreationForm):
-    firstname = forms.CharField(
+    firstname = forms.CharField(label=_(u'firstname'),
         required=True,
         widget=forms.TextInput(attrs={'class':'form-control'}))
         
 
 
-    lastname = forms.CharField(
+    lastname = forms.CharField(label=_(u'lastname'),
         required=True,
         widget=forms.TextInput(attrs={'class':'form-control'}))
 
 
-    email = forms.EmailField(
+    email = forms.EmailField(label=_(u'email'),
         required=True ,
         widget=forms.EmailInput(attrs={'autocomplete': 'new-password' , 'class':'form-control'}))
 
-    phonenumber = forms.CharField(
+    phonenumber = forms.CharField(label=_(u'phone number'),
         required=True,
         max_length=11 , 
         widget=forms.TextInput(attrs={'class':'form-control'}))
 
     password1 = forms.CharField(
         min_length= 10 ,
-        label=("Password"),
+        label=_(u'password'),
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password' , 'class':'form-control'}),
 
     )
     password2 = forms.CharField(
         min_length= 10 ,
-        label=("Password confirmation"),
+        label=_(u"Password confirmation"),
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password' , 'class':'form-control'}),
         strip=False,
         help_text=("Enter the same password as before, for verification."),
@@ -101,20 +103,14 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 
-
-
-
-
-
-
 class MyUserLoginForm(forms.Form):
 
-    email = forms.EmailField(
+    email = forms.EmailField(label=_(u'email'),
         required=True,
         widget=forms.EmailInput(attrs={'autocomplete': 'new-password' , 'class':'form-control'}))
 
 
-    password = forms.CharField(
+    password = forms.CharField(label=_(u'password'),
         required=True,
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password' , 'class':'form-control'})) 
 
