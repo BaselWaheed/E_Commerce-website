@@ -5,7 +5,7 @@
     <div class="main">
       <div class="container">
         <!-- BEGIN SIDEBAR & CONTENT -->
-        {% if items %}
+        {% if Cart_objects %}
         <div class="row margin-bottom-40">
           <!-- BEGIN CONTENT -->
           <div class="col-md-12 col-sm-12">
@@ -22,29 +22,29 @@
                     <th class="goods-page-price">price</th>
                     <th class="goods-page-total" colspan="2">Total</th>
                   </tr>
-                  {% for pro in items %}
+                  {% for key , value in Cart_objects.items %}
                   <tr>
                     <td class="goods-page-image">
-                      <a href="javascript:;"><img src="{{pro.product.pro_image}}" alt="Berry Lace Dress"></a>
+                      <a href="javascript:;"><img src="{{value.image}}" alt="Berry Lace Dress"></a>
                     </td>
                     <td class="goods-page-description">
-                      <h3><a href="{{pro.product.get_absolute_url}}">{{pro.product.pro_name}}</a></h3>
+                      <h3><a href="{{value.name.get_absolute_url}}">{{value.name}}</a></h3>
                       <p><strong>Item {{forloop.counter}}</strong> </p>
-                      <a href="{{pro.product.get_absolute_url}}"><em>More info is here</em></a>
+                      <a href="{% url 'product:productdetails' value.slug %}"><em>More info is here</em></a>
                     </td>
                     
                     <td class="goods-page-ref-no">
-                      {% if pro.size %}
-                      <h3><a href="javascript:;">{{pro.size}}</a></h3>
+                      {% if value.size %}
+                      <h3><a href="javascript:;">{{value.size}}</a></h3>
                       {% else%}
                       <h3><a href="javascript:;">---</a></h3>
                       {% endif %}
-                      <a href="javascript:;" style="color: black;"><p id="addcat"><strong>Sizes</strong></p></a>
+                      <!-- <a href="javascript:;" style="color: black;"><p id="addcat"><strong>Sizes</strong></p></a> -->
                       <div class="pull-left" id="catinput">
-                        <form action="{% url 'order:update' %}" method="post">
+                        <!-- <form action="{% url 'order:update' %}" method="post">
                           {% csrf_token %}
                           <select class="form-control input-sm" name="size">
-                            {% for product in pro.product.productsize_set.all %}
+                            {% for product in key.productsize_set.all %}
                                 {% if product.cl_size %} 
                                 <option value="{{product.cl_size }}">{{product.cl_size }}</option>
                                 {% elif product.sh_size %}
@@ -56,7 +56,7 @@
                           </select>
                           <input name="cart_id" type="hidden" value="{{pro.id}}" >
                           <button type="submit" style="background-color: red; color:aliceblue; width:65px; height:30px ;border:none;"> Upate</button>
-                      </form>
+                      </form> -->
                         
                       </div>
                     </td>
@@ -66,22 +66,22 @@
                           <button class="btn btn-primary px-3 me-2"
                             onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</i>
                           </button> 
-                            <input name="cart_id" type="hidden" value="{{pro.id}}" >
-                            <input  name="quantity" min="1" value="{{pro.quantity}}" readonly="" type="number"style="text-align:right ;width: 30px; height:25px ; font-weight:bold; border:none"/>
+                            <input name="slug" type="hidden" value="{{value.slug}}" >
+                            <input  name="quantity" min="1" value="{{value.quantity}}" readonly="" type="number"style="text-align:right ;width: 30px; height:25px ; font-weight:bold; border:none"/>
                           <button class="btn btn-primary px-3 ms-2"
                             onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</i>
                           </button> 
                         </form>
                     </td>
-                  </form>
+                  <!-- </form> -->
                     <td class="goods-page-price">
-                      <strong>{{pro.product.pro_total_price}}<span> LE</span></strong>
+                      <strong>{{value.price}}<span> LE</span></strong>
                     </td>
                     <td class="goods-page-total">
-                      <strong> {% widthratio pro.product.pro_total_price 1 pro.quantity  %}<span> LE</span></strong>
+                      <strong> {% widthratio value.quantity 1 value.price  %}<span> LE</span></strong>
                     </td>
                     <td class="del-goods-col">
-                      <a class="del-goods" href="{% url 'order:delete' pro.slug %}">&nbsp;</a>
+                      <a class="del-goods" href="{% url 'order:delete' value.slug %}">&nbsp;</a>
                     </td>
                   </tr>
                     {% endfor %}

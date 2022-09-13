@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'cy9n3%*adu*$sqbp8g)&3af)vmb^=i@2xr(qz+6ql4*x38&yo='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -94,6 +94,30 @@ DATABASES = {
     }
 
 }
+
+
+# Database
+# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+# DATABASES = {
+
+#     'default': {
+
+#         'ENGINE': 'django.db.backends.mysql',
+
+#         'NAME': 'E_commerce',
+
+#         'USER': 'baselwaheed',
+
+#         'PASSWORD': 'basel201200',
+
+#         'HOST': 'baselwaheed.mysql.pythonanywhere-services.com',
+
+#         'PORT': '5432',
+
+#     }
+
+# }
 
 
 

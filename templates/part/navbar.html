@@ -146,22 +146,23 @@
         <!-- BEGIN CART -->
         <div class="top-cart-block">
           <div class="top-cart-info">
-            <a href="javascript:void(0);" class="top-cart-info-count">{{quantity}} {% trans "items" %}</a>
+            <a href="javascript:void(0);" class="top-cart-info-count">{{Cart_objects|length}} {% trans "items" %}</a>
             <a href="javascript:void(0);" class="top-cart-info-value">{{total_price}} LE</a>
           </div>
           <i class="fa fa-shopping-cart"></i>
                         
           <div class="top-cart-content-wrapper">
-            {% if items %}
+            {% if Cart_objects %}
             <div class="top-cart-content">
-              <ul class="scroller" style="height: calc({{quantity}} * 55px) ;">
-                {% for pro in items %}
+              <ul class="scroller" style="height: calc({{Cart_objects|length}} * 55px) ;">
+                {% for key , value in Cart_objects.items %}
+
                 <li>
-                  <a href="shop-item.html"><img src="{{pro.product.pro_image}}" alt="Rolex Classic Watch" width="37" height="34"></a>
-                  <span class="cart-content-count">x {{pro.quantity}}</span>
-                  <strong><a href="shop-item.html">{{pro.product.pro_name}}</a></strong>
-                  <em>{{pro.product.pro_total_price}} LE</em>
-                  <a href="{% url 'order:delete'  pro.slug  %}" class="del-goods">&nbsp;</a>
+                  <a href="shop-item.html"><img src="{{value.image}}" alt="Rolex Classic Watch" width="37" height="34"></a>
+                  <span class="cart-content-count">x {{value.quantity}}</span>
+                  <strong><a href="shop-item.html">{{value.name}}</a></strong>
+                  <em>{{value.price}} LE</em>
+                  <a href="{% url 'order:delete' value.slug %}" class="del-goods">&nbsp;</a>
                 </li>
                 {% endfor %}
               </ul>
@@ -204,11 +205,11 @@
                       <div class="col-md-3 col-sm-4 col-xs-6">
                         <div class="product-item">
                           <div class="pi-img-wrapper">
-                            <a href="shop-item.html"><img src="{{product.pro_image}}" class="img-responsive" alt="Berry Lace Dress"></a>
+                            <a href="{{product.get_absolute_url}}"><img src="{{product.pro_image}}" class="img-responsive" alt="Berry Lace Dress"></a>
                           </div>
-                          <h3><a href="shop-item.html">{{product.pro_name}}</a></h3>
+                          <h3><a href="{{product.get_absolute_url}}">{{product.pro_name}}</a></h3>
                           <div class="pi-price">{{product.pro_total_price}} LE</div>
-                          <a href="javascript:;" class="btn btn-default add2cart">{% trans "Add to cart" %}</a>
+                          <a href="javascript:;" class="btn btn-default add2cart">{% trans "favourite" %}</a>
                         </div>
                       </div>
                       {% endfor %}
@@ -225,7 +226,7 @@
                 {% for cat in category %}
                 <!-- <li class="active"><a href="shop-index.html">{{cat.cat_name}}</a></li> -->
                 {% if cat.parent == None %}
-                <li><a href="shop-index-header-fix.html">{{cat.cat_name}}</a></li>
+                <li><a href="{% url 'product:productlist' %}">{{cat.cat_name}}</a></li>
                 {% endif %}
                 {% endfor%}
               </ul>

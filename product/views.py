@@ -2,7 +2,7 @@ from django.shortcuts import render , get_object_or_404
 from django.views import View
 from django.views.generic import ListView ,DetailView
 from .models import Product , Category, ProductSize
-from product.search import lookup
+# from product.search import lookup
 from django.db.models import Q
 
 
@@ -24,7 +24,7 @@ class IndexListView(View):
 class ProductListView(ListView):
     model = Product
     template_name = "product/shop-product-list.html"
-    paginate_by = 20
+    paginate_by = 5
     queryset =  Product.objects.all().order_by('-id')
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
@@ -49,9 +49,8 @@ class ProductDetails(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProductDetails, self).get_context_data(**kwargs)
         context['BESTSELLERS'] = Product.objects.filter(pro_is_active=True)[:3]
+        context['products'] = Product.objects.all().order_by('-id')
         context['POPULAR'] = Product.objects.filter(pro_category=self.get_object().pro_category)[:4]
-        print(context['POPULAR'])
-
         return context
         
     def get_context_object_name(self, object_list):

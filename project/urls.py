@@ -9,7 +9,7 @@ from django.views.i18n import JavaScriptCatalog
 
 urlpatterns = [
     # path('selectlanguage' , ),
-    path('i18n/', include('django.conf.urls.i18n')),    
+    path('i18n/', include('django.conf.urls.i18n')),
 ] 
 
 
@@ -24,3 +24,6 @@ urlpatterns += i18n_patterns(
 
 
 
+handler404 = 'accounts.views.error_404_view'
+
+handler500 = 'accounts.views.error_500_view'
